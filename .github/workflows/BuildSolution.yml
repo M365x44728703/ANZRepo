@@ -23,13 +23,6 @@ jobs:
       - name: Install Power Platform Tools
         uses: microsoft/powerplatform-actions/actions-install@v1
 
-      - name: Update Solution Version
-        shell: pwsh
-        run: |
-          pac solution version `
-            --solutionPath contents `
-            --buildversion 1 `
-            --revisionversion 1
 
       - name: Pack Solution
         uses: microsoft/powerplatform-actions/pack-solution@v1
