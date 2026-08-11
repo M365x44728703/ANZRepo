@@ -1,0 +1,54 @@
+name: Pack ANZTestSolution_v1_0_0_1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pack:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display Repository Structure
+        shell: pwsh
+        run: |
+          Write-Host "Current Directory:"
+          Get-Location
+
+          Write-Host "Repository Files:"
+          Get-ChildItem -Path . -Recurse
+
+      - name: Install Power Platform Tools
+        uses: microsoft/powerplatform-actions/actions-install@v1
+
+      - name: Update Solution Version
+        shell: pwsh
+        run: |
+          pac solution version `
+            --solutionPath contents `
+            --buildversion 1.0.0.1 `
+            --revisionversion 1.0.0.2
+
+      - name: Pack Solution
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: contents
+          solution-file: main/ANZTestSolution_1_0_0_1.zip
+          solution-type: Both
+
+      - name: Upload Solution Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ANZTestSolution_1_0_0_2
+          path: |
+            main/ANZTestSolution_1_0_0_2.zip
+            main/ANZTestSolution_1_0_0_2_managed.zip
+      - name: Create Main Folder
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path main
+
+      - name: Pack Solution
+        uses: microsoft/powerplatform-
