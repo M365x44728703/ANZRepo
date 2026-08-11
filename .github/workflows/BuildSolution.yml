@@ -26,4 +26,22 @@ jobs:
       - name: Update Solution Version
         shell: pwsh
         run: |
-   
+          pac solution version `
+            --solutionPath contents `
+            --buildversion 1 `
+            --revisionversion 1
+
+      - name: Pack Solution
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: contents
+          solution-file: main/ANZTestSolution_1_0_0_1.zip
+          solution-type: Both
+
+      - name: Upload Solution Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ANZTestSolution_1_0_0_1
+          path: |
+            main/ANZTestSolution_1_0_0_1.zip
+            main/ANZTestSolution_1_0_0_1_managed.zip
