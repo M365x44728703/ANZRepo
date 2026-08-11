@@ -1,0 +1,66 @@
+name: Deploy NTTDataSolution
+
+on:
+  workflow_run:
+    workflows:
+      - "Pack NTTDataSolution"
+    branches:
+      - main
+    types:
+      - completed
+
+  workflow_dispatch:
+  
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    environment: production
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Power Platform Tools
+        uses: microsoft/powerplatform-actions/actions-install@v1
+
+      - name: Download Solution Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NTTDataSolution
+          path: |
+            main/NTTDataSolution.zip
+            main/NTTDataSolution_managed.zip
+  
+      - name: Validate Secrets
+        shell: pwsh
+        run: |
+          if ("${{ secrets.CLIENT_ID }}" -eq "") {
+            Write-Error "CLIENT_ID is empty"
+          } else {
+            Write-Host "CLIENT_ID found"
+          }
+
+          if ("${{ secrets.TENANT_ID }}" -eq "") {
+            Write-Error "TENANT_ID is empty"
+          } else {
+            Write-Host "TENANT_ID found"
+          }
+      
+          if ("${{ secrets.CLIENT_SECRET }}" -eq "") {
+            Write-Error "CLIENT_SECRET is empty"
+          } else {
+            Write-Host "CLIENT_SECRET found"
+          }
+
+      - name: Import Managed Solution
+        uses: microsoft/powerplatform-actions/import-solution@v1
+        with:
+          environment-url: https://org69155e68.crm.dynamics.com
+          user-name: ${{ secrets.USERNAME }}
+          password-secret: ${{ secrets.PASSWORD }}
+          solution-file: NTTDataSolution_managed.zip
+   
