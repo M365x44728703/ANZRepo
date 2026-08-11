@@ -1,0 +1,25 @@
+{
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "new_ANZVariable",
+      "Value": "Suresh",
+      "DefaultValue": "Madhuri",
+      "Name": {
+        "Default": "ANZVariable",
+        "ByLcid": {
+          "1033": "ANZVariable"
+        }
+      },
+      "TypeId": 100000000,
+      "Description": {
+        "Default": "Test",
+        "ByLcid": {
+          "1033": "Test"
+        }
+      },
+      "IsRequired": false
+    }
+  ],
+  "ConnectionReferences": [],
+  "CopilotAgents": []
+}
