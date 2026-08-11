@@ -1,4 +1,4 @@
-name: Pack ANZTestSolution
+name: Pack ANZTestSolution_v1_0_0_1
 
 on:
   workflow_dispatch:
@@ -23,17 +23,7 @@ jobs:
       - name: Install Power Platform Tools
         uses: microsoft/powerplatform-actions/actions-install@v1
 
-      - name: Pack Solution
-        uses: microsoft/powerplatform-actions/pack-solution@v1
-        with:
-          solution-folder: contents
-          solution-file: main/ANZTestSolution.zip
-          solution-type: Both
-
-      - name: Upload Solution Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NTTDataSolution
-          path: |
-            main/NTTDataSolution.zip
-            main/NTTDataSolution_managed.zip
+      - name: Update Solution Version
+        shell: pwsh
+        run: |
+   
