@@ -1,4 +1,4 @@
-name: Pack NTTDataSolution
+name: Pack ANZTestSolution
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
         uses: microsoft/powerplatform-actions/pack-solution@v1
         with:
           solution-folder: contents
-          solution-file: main/NTTDataSolution.zip
+          solution-file: main/ANZTestSolution.zip
           solution-type: Both
 
       - name: Upload Solution Artifact
